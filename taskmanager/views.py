@@ -17,3 +17,12 @@ def index(request):
         ]
     }
     return render(request,'home.html',context)
+
+def task_list(request):
+    context = {}
+    tasks = Task.objects.all()
+    context = {
+        'tasks':tasks
+    }
+    print(context)
+    return render(request,'tasklist.html',context)
