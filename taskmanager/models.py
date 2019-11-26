@@ -450,6 +450,7 @@ class Task(models.Model):
     endingtime = models.CharField(db_column='EndingTime', max_length=40, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        ordering = ['mode','product','year','id']
         managed = False
         db_table = 'task'
         unique_together = (('mode', 'product', 'year', 'id'),)

@@ -18,6 +18,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
+
                     <table class="table table-hover">
                         <tbody>
                         <tr>
@@ -27,24 +28,60 @@
                             <th>项目编号</th>
                             <th>项目名称</th>
                         </tr>
-                        {% for task in tasks %}
-                        <tr>
-                            <td>{{ task.mode|add:'-'|add:task.product|add:'-'|add:task.year|add:'-'|add:task.id}}</td>
+                        {% for task in page_of_tasks.object_list %}
+                            <tr>
+                                <td>{{ task.mode|add:'-'|add:task.product|add:'-'|add:task.year|add:'-'|add:task.id }}</td>
                                 <td><span class="label label-success">{{ task.flag }}</span></td>
-                            <td>{{ task.endingtime }}</td>
+                                <td>{{ task.endingtime }}</td>
 
-                            <td>{{ task.number }}</td>
-                             <td>{{ task.name|truncatechars:15 }}</td>
+                                <td>{{ task.number }}</td>
+                                <td>{{ task.name|truncatechars:15 }}</td>
 
-                        </tr>
+                            </tr>
                         {% endfor %}
 
                         </tbody>
                     </table>
+
+
                 </div>
                 <!-- /.box-body -->
             </div>
+        <div class="box-tools pull-right">
+                        <ul class="pagination pagination-sm inline">
+                            <li>
+                                {% if page_of_tasks.has_previous %}
+                                    <a href="?page={{ page_of_tasks.previous_page_number }}">«</a>
+                                {% else %}
+                                    <span>«</span>
+                                {% endif %}
+                            </li>
+                            {% for page_num in page_range %}
+                                {% if page_num == page_of_tasks.number %}
+                                    <li class="active"> <span>{{ page_num }}</span></li>
+                                {% else %}
+                                    {% if page_num == '...' %}
+                                        <li> <span>{{ page_num }}</span></li>
+                                    {% else %}
+<li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                                    {% endif %}
+
+                                {% endif %}
+
+                            {% endfor %}
+                            <li>
+                                {% if page_of_tasks.has_next %}
+                                    <a href="?page={{ page_of_tasks.next_page_number }}">»</a>
+                                {% else %}
+                                    <span>»</span>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
             <!-- /.box -->
         </div>
+
+
     </div>
+
 {% endblock task_list %}
