@@ -41,21 +41,39 @@ def task_list(request):
     if page_range[-1] != paginator.num_pages:
         page_range.append(paginator.num_pages)
 
-
-
+    users = User.objects.values_list('name', flat=True)
     context = {}
     context = {
         'page_of_tasks': page_of_tasks,
-        'page_range':page_range
+        'page_range':page_range,
+        'users':users,
     }
     print(context)
     return render(request, 'tasklist.html', context)
 
 
-def task_detail(request, task_pk):
-    task = get_object_or_404(Task, pk=task_pk)
+def task_detail(request):
+    users = User.objects.values_list('name', flat=True)
     context = {}
+    context = {
+        'users':users,
+    }
     # context['previous_blog'] = Blog.objects.filter(created_time__gt=blog.created_time).last()
     # context['next_blog'] = Blog.objects.filter(created_time__lt=blog.created_time).first()
-    context['task'] = task
     return render(request,'task_detail.html',context)
+
+
+def private_task(request):
+    context = {}
+    username = request.GET.get('name')
+    if username:
+        tasks = Taskdetail.objects.filter(name=username)
+    users = User.objects.values_list('name', flat=True)
+    tasks_unfinished_num = Taskdetail.objects.filter(Q(name=username) & ~Q(canbegan='已完成')).count()
+    context = {
+        'tasks':tasks,
+        'users':users,
+        'username':username,
+        'tasks_unfinished_num':tasks_unfinished_num,
+    }
+    return render(request,'private_task.html',context)

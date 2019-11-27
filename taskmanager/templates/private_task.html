@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load my_filter %}
-
+{% block username %}{{ username }}{% endblock username %}
+{% block user_task_num %}目前正在进行{{ tasks_unfinished_num }}个子任务{% endblock user_task_num%}
 {% block user_list %}
     {% for user in users %}
         <li><a href="{%url 'private_task'%}?name={{ user }}">{{ user }}</a></li>
@@ -70,11 +71,11 @@
       events    : [
           {% for task in tasks %}
         {
-          title          :'{{ task.name|linebreaksbr }}',
-          start          : new Date({{ task.endingtime|time_reformat }}-{{task.mode|add:'-'|add:task.product|add:'-'|add:task.year|add:'-'|add:task.id|task_days}}),
-          end            : new Date({{ task.endingtime|time_reformat }}+1),
+          title          :'{{ task.rwh|for_pri_task}} :{{ task.wbs }}',
+          start          : new Date({{ task.begantime|time_reformat }}),
+          end            : new Date({{ task.endtime|time_reformat }}+1),
           allDay         : true,
-          url            : '{% url "task_detail" %}?rwh={{task.mode|add:'-'|add:task.product|add:'-'|add:task.year|add:'-'|add:task.id}}',
+          url            : '{% url "task_detail" %}?rwh={{ task.rwh }}',
               {% if task.flag == '已完成' %}
           backgroundColor: '#8fa0b7',
           borderColor    : '#8fa0b7'

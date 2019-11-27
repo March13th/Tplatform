@@ -1,12 +1,17 @@
 from django import template
 import re
-from taskmanager.models import Taskdetail
+from taskmanager.models import Taskdetail,Task
+import datetime
 
 register = template.Library()
 
 @register.filter()
-def endingtime_reformat(value):
-    value_split = re.sub('\D', ',', value).split(',')
+def time_reformat(value):
+    if isinstance(value,datetime.date):
+        value = value.strftime('%Y-%m-%d')
+        value_split = value.split('-')
+    else:
+        value_split = re.sub('\D', ',', value).split(',')
     value_reformat = '{},{},{}'.format(value_split[0], int(value_split[1]) - 1,
                                        value_split[2])
     return value_reformat
@@ -20,3 +25,14 @@ def task_days(value):
     except:
         return 0
     return keep_days
+
+@register.filter()
+def for_pri_task(value):
+    print(value)
+    rwh_split = value.split('-')
+    mode = rwh_split[0]
+    product = rwh_split[1]
+    year = rwh_split[2]
+    id = rwh_split[3]
+    task_object = Task.objects.get(mode=mode,product=product,year=year,id=id)
+    return task_object.name

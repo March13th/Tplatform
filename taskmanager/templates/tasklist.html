@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% block user_list %}
+    {% for user in users %}
+        <li><a href="{%url 'private_task'%}?name={{ user }}">{{ user }}</a></li>
+    {% endfor %}
+{% endblock user_list %}
 {% block task_list %}
     <div class="row">
         <div class="col-xs-12">
@@ -30,7 +35,7 @@
                         </tr>
                         {% for task in page_of_tasks.object_list %}
                             <tr>
-                                <td>{{ task.mode|add:'-'|add:task.product|add:'-'|add:task.year|add:'-'|add:task.id }}</td>
+                                <td><a href="{% url 'task_detail' %}?rwh={{ task.mode|add:'-'|add:task.product|add:'-'|add:task.year|add:'-'|add:task.id }}">{{ task.mode|add:'-'|add:task.product|add:'-'|add:task.year|add:'-'|add:task.id }}</a></td>
                                 <td><span class="label label-success">{{ task.flag }}</span></td>
                                 <td>{{ task.endingtime }}</td>
 
