@@ -48,18 +48,24 @@ def task_list(request):
         'page_range':page_range,
         'users':users,
     }
-    print(context)
     return render(request, 'tasklist.html', context)
 
 
 def task_detail(request):
     users = User.objects.values_list('name', flat=True)
-    context = {}
+    rwh = request.GET.get('rwh')
+    rwh_split = rwh.split('-')
+    mode = rwh_split[0]
+    product = rwh_split[1]
+    year = rwh_split[2]
+    id = rwh_split[3]
+    Task_object = get_object_or_404(Task,mode=mode,product=product,year=year,id=id)
+    Taskdetail_object = Taskdetail.objects.filter(rwh=rwh)
     context = {
         'users':users,
+        'Task_object':Task_object,
+        'Taskdetail_object':Taskdetail_object,
     }
-    # context['previous_blog'] = Blog.objects.filter(created_time__gt=blog.created_time).last()
-    # context['next_blog'] = Blog.objects.filter(created_time__lt=blog.created_time).first()
     return render(request,'task_detail.html',context)
 
 

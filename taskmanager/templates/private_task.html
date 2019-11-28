@@ -76,7 +76,7 @@
           end            : new Date({{ task.endtime|time_reformat }}+1),
           allDay         : true,
           url            : '{% url "task_detail" %}?rwh={{ task.rwh }}',
-              {% if task.flag == '已完成' %}
+              {% if task.flag|flag_strip_space == '已完成' %}
           backgroundColor: '#8fa0b7',
           borderColor    : '#8fa0b7'
               {% else %}

@@ -85,10 +85,10 @@ BODY 标签选项：
                             <li>
                                 <ul class="menu">
                                     {% block user_list %}
-    {% for user in users %}
-        <li><a href="{%url 'private_task'%}?name={{ user }}">{{ user }}</a></li>
-    {% endfor %}
-{% endblock user_list %}
+                                        {% for user in users %}
+                                            <li><a href="{% url 'private_task' %}?name={{ user }}">{{ user }}</a></li>
+                                        {% endfor %}
+                                    {% endblock user_list %}
                                 </ul>
                             </li>
                         </ul>
@@ -160,42 +160,37 @@ BODY 标签选项：
                     <strong><i class="fa fa-book margin-r-5"></i><span class="label label-info">任务号</span></strong>
 
                     <p class="text-muted">
-                        JC-CTC/TDCS-xxxxxxxxxxxxxxxxxxx
+                        {{ Task_object.mode }}-{{ Task_object.product }}-{{ Task_object.year }}-{{ Task_object.id }}
                     </p>
                     <hr>
                     <strong><i class="fa fa-book margin-r-5"></i><span class="label label-info">项目名称</span></strong>
 
                     <p class="text-muted">
-                        xxxxxxxxxxxxxxxxxxx
+                        {{ Task_object.name }}
                     </p>
                     <hr>
-                                        <strong><i class="fa fa-book margin-r-5"></i><span class="label label-info">项目编号</span></strong>
+                    <strong><i class="fa fa-book margin-r-5"></i><span class="label label-info">项目编号</span></strong>
 
                     <p class="text-muted">
-                        xxxxxxxxxxxxxxxxxxx
+                        {{ Task_object.number }}
                     </p>
                     <hr>
 
-                    <strong><i class="fa fa-book margin-r-5"></i><span class="label label-info">项目人员分工</span></strong>
+                    <strong><i class="fa fa-book margin-r-5"></i><span class="label label-info">项目细分</span></strong>
 
+{% for T in Taskdetail_object %}
                     <p>
-                        <span class="label label-danger">people1</span>:1111111111111111111111111111111111111111
+                        <span class="label label-success">{{ T.name }}</span>:{{ T.wbs }}
                     </p>
-                    <p>
-                                                <span class="label label-success">people2</span>:1111111111111111111111111111111111111111
-                    </p>
-                    <p>
-                                                <span class="label label-warning">people2</span>:1111111111111111111111111111111111111111
-                    </p>
-                    <p>
-                                                <span class="label label-primary">people2</span>:1111111111111111111111111111111111111111
-                    </p>
+{% endfor %}
+
+
 
                     <hr>
 
                     <strong><i class="fa fa-book margin-r-5"></i><span class="label label-info">项目状态</span></strong>
 
-                    <p>xxxxxxxxxxxxxxxxxxx</p>
+                    <p>{{ Task_object.flag }}</p>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -213,7 +208,7 @@ BODY 标签选项：
         <!-- Default to the left -->
         <strong>Author:<a href="#">March_13th</a></strong>
     </footer>
-        <!-- REQUIRED JS SCRIPTS -->
+    <!-- REQUIRED JS SCRIPTS -->
 
     <!-- jQuery 3 -->
     <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>

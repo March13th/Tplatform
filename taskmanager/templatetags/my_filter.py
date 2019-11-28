@@ -36,3 +36,9 @@ def for_pri_task(value):
     id = rwh_split[3]
     task_object = Task.objects.get(mode=mode,product=product,year=year,id=id)
     return task_object.name
+
+@register.filter()
+def flag_strip_space(value):
+    if value:
+        value = value.stript()
+        return value
