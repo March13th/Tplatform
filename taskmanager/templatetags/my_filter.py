@@ -28,7 +28,6 @@ def task_days(value):
 
 @register.filter()
 def for_pri_task(value):
-    print(value)
     rwh_split = value.split('-')
     mode = rwh_split[0]
     product = rwh_split[1]
@@ -38,7 +37,7 @@ def for_pri_task(value):
     return task_object.name
 
 @register.filter()
-def flag_strip_space(value):
+def strip_space(value):
     if value:
-        value = value.stript()
+        value = value.strip()
         return value

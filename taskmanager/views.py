@@ -10,7 +10,7 @@ from django.db.models import Q
 def index(request):
     context = {}
     tasks = Task.objects.all()
-    users = User.objects.values_list('name', flat=True)
+    users = User.objects.filter(type='测试').values_list('name', flat=True)
     context = {
         'tasks': tasks,
         'users': users,
@@ -41,7 +41,7 @@ def task_list(request):
     if page_range[-1] != paginator.num_pages:
         page_range.append(paginator.num_pages)
 
-    users = User.objects.values_list('name', flat=True)
+    users = User.objects.filter(type='测试').values_list('name', flat=True)
     context = {}
     context = {
         'page_of_tasks': page_of_tasks,
@@ -52,7 +52,7 @@ def task_list(request):
 
 
 def task_detail(request):
-    users = User.objects.values_list('name', flat=True)
+    users = User.objects.filter(type='测试').values_list('name', flat=True)
     rwh = request.GET.get('rwh')
     rwh_split = rwh.split('-')
     mode = rwh_split[0]
@@ -74,7 +74,7 @@ def private_task(request):
     username = request.GET.get('name')
     if username:
         tasks = Taskdetail.objects.filter(name=username)
-    users = User.objects.values_list('name', flat=True)
+    users = User.objects.filter(type='测试').values_list('name', flat=True)
     tasks_unfinished_num = Taskdetail.objects.filter(Q(name=username) & ~Q(canbegan='已完成')).count()
     context = {
         'tasks':tasks,

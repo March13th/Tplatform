@@ -1,152 +1,16 @@
+{% extends "base.html" %}
 {% load my_filter %}
-<!DOCTYPE html>
-<!--
-这是起始页面，你可以使用此页面开始你的项目。
-此页面移除了链接，并提供了所需要的标记。
--->
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tplatform | home</title>
-    <!-- 告诉浏览器该页面是自适应布局 -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
-    <!-- AdminLTE 皮肤。默认使用蓝色皮肤。
-          您可以选择其他皮肤。皮肤样式写在 body 标签中，
-          以便使之生效。 -->
-    <link rel="stylesheet" href="{% static 'dist/css/skins/skin-blue.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.css' %}">
-    <link rel="stylesheet" href="{% static 'redefine.css' %}">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- 警告：Respond.js 不支持 file:// 方式查看（即本地方式查看）-->
-    <!--[if lt IE 9]>
-    <script src="{% static 'https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js' %}"></script>
-    <script src="{% static 'https://oss.maxcdn.com/respond/1.4.2/respond.min.js' %}"></script>
-    <![endif]-->
-</head>
-<!--
-BODY 标签选项：
-=================
-使用下面一个或多个类来
-获得所需效果
-|---------------------------------------------------------|
-| 皮 肤         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|布局选项       | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-
-    <!-- Main Header -->
-    <header class="main-header">
-
-        <!-- Logo -->
-        <a href="{% url 'home' %}" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>T</b>PF</span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>T</b>platform</span>
-        </a>
-
-        <!-- Header Navbar -->
-        <nav class="navbar navbar-static-top" role="navigation">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">切换导航</span>
-            </a>
-            <!-- Navbar Right Menu -->
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-
-
-                    <!-- User Account -->
-                    <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">测试人员<span
-                                class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <ul class="menu">
-                                    {% block user_list %}
-                                        {% for user in users %}
-                                            <li><a href="{% url 'private_task' %}?name={{ user }}">{{ user }}</a></li>
-                                        {% endfor %}
-                                    {% endblock user_list %}
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
-
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="{% static 'joker.jpg' %}" class="img-squre" alt="用户图像">
-                </div>
-                <div class="pull-left info">
-                    <p></p>
-                </div>
-            </div>
-
-            <!-- Sidebar Menu -->
-            <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">导航</li>
-                <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="#"><i class="fa fa-flag-o"></i> <span>任务</span>
-                    <span class="label label-primary pull-right"></span>
-                </a></li>
-                <li><a href="#"><i class="fa fa-book"></i> <span>知识库</span></a></li>
-                <li class="treeview">
-                    <a href="#"><i class="fa fa-laptop"></i> <span>测试工具</span>
-                        <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#">shell登录</a></li>
-                        <li><a href="#">报告生成</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- /.sidebar-menu -->
-        </section>
-        <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (页眉) -->
-        <section class="content-header">
-
-        </section>
-
-        <!-- Main content -->
-        <section class="content container-fluid">
+{% block title %}PRIVATE{% endblock %}
+{% block user_list %}
+    {% for user in users %}
+        <li><a href="{% url 'private_task' %}?name={{ user }}">{{ user }}</a></li>
+    {% endfor %}
+{% endblock user_list %}
+{% block content %}
+     <!-- Main content -->
+        <div class="row">
+    <div class="col-md-4" style="float: none;  display: block;margin-left: auto;margin-right: auto; ">
 
             <!--------------------------
               | Your Page Content Here |
@@ -195,33 +59,7 @@ BODY 标签选项：
                 <!-- /.box-body -->
             </div>
 
-        </section>
     </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            任何你想要的
         </div>
-        <!-- Default to the left -->
-        <strong>Author:<a href="#">March_13th</a></strong>
-    </footer>
-    <!-- REQUIRED JS SCRIPTS -->
+{% endblock content %}
 
-    <!-- jQuery 3 -->
-    <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    <!-- AdminLTE App -->
-    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
-
-    <!-- 或者，
-         您可以添加Slimscroll和FastClick插件。
-         user experience. -->
-    <script src="{% static 'bower_components/moment/moment.js' %} "></script>
-    <script src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
-</div>
-</body>
-</html>

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load my_filter %}
+{% block title %}PRIVATE{% endblock %}
 {% block username %}{{ username }}{% endblock username %}
 {% block user_task_num %}目前正在进行{{ tasks_unfinished_num }}个子任务{% endblock user_task_num%}
 {% block user_list %}
@@ -7,7 +8,7 @@
         <li><a href="{%url 'private_task'%}?name={{ user }}">{{ user }}</a></li>
     {% endfor %}
 {% endblock user_list %}
-{% block task_calendar %}
+{% block content %}
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-body no-padding">
@@ -76,7 +77,7 @@
           end            : new Date({{ task.endtime|time_reformat }}+1),
           allDay         : true,
           url            : '{% url "task_detail" %}?rwh={{ task.rwh }}',
-              {% if task.flag|flag_strip_space == '已完成' %}
+              {% if task.canbegan|strip_space == '已完成' %}
           backgroundColor: '#8fa0b7',
           borderColor    : '#8fa0b7'
               {% else %}
@@ -193,4 +194,4 @@
   })
 
     </script>
-{% endblock task_calendar %}
+{% endblock content %}
