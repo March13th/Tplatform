@@ -41,3 +41,11 @@ def strip_space(value):
     if value:
         value = value.strip()
         return value
+
+@register.filter()
+def late(value):
+    time_list =[int(t) for t in value.split(',')]
+    task_endtime = datetime.datetime(year=time_list[0],month=time_list[1],day=time_list[2])
+    now = datetime.datetime.today()
+    late_value = (task_endtime-now).days
+    return late_value

@@ -1,0 +1,84 @@
+/*修改导航栏背景颜色*/
+.skin-blue .main-header .navbar {
+    background-color: #222D32;
+}
+.skin-blue .main-header .logo {
+    background-color: black;
+}
+
+/*此处时为了处理user的下拉菜单过宽*/
+.navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+    position: absolute;
+    right: auto;
+    left: auto;
+    background-color: #222D32;
+        color: #b8c7ce;
+}
+
+/*此处为了修改下拉菜单样式*/
+.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a {
+    display: block;
+    background-color: #337ab7;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #fff;
+    white-space: nowrap;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/*此处为了修改鼠标悬停样式*/
+.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a:hover{
+border-bottom: 1px solid;
+background: #222D32;
+}
+
+/*此处为了修改日历中任务名称长而看不全且不换行的问题*/
+.fc .fc-axis, .fc button, .fc-day-grid-event .fc-content, .fc-list-item-marker, .fc-list-item-time, .fc-time-grid-event .fc-time, .fc-time-grid-event.fc-short .fc-content {
+    white-space: pre-wrap;
+}
+
+div.box-tools {
+    text-align: center;
+}
+
+/*此处修改了选择user后人名的样式*/
+.user-panel p {
+    color: white;
+    margin: 0 0;
+    text-align: center;
+}
+.user-panel {
+    position: relative;
+    width: 100%;
+    padding: 0;
+}
+
+.content {
+    min-height: 150px;
+    padding: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+     margin-bottom: 0px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}

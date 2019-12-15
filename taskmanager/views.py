@@ -8,15 +8,26 @@ from django.db.models import Q
 
 # Create your views here.
 def index(request):
+    year = datetime.now().year
     context = {}
-    tasks = Task.objects.all()
+    year_tasks = Task.objects.filter(endingtime__startswith=year).filter(flag='已完成')
+    year_ctctdcs = year_tasks.filter(product='CTC/TDCS')
+    year_cips = year_tasks.filter(product='CIPS')
+    year_bm = year_tasks.filter(product='BM')
     users = User.objects.filter(type='测试').values_list('name', flat=True)
+    month_ctctdcs = [len(year_ctctdcs.filter(endingtime__contains=str(month)+'月')) for month in range(1,13)]
+    month_cips = [len(year_cips.filter(endingtime__contains=str(month) + '月')) for month in range(1, 13)]
+    month_bm = [len(year_bm.filter(endingtime__contains=str(month) + '月')) for month in range(1, 13)]
+    for i in month_ctctdcs:
+        print(i)
     context = {
-        'tasks': tasks,
         'users': users,
-        'color': [
-            '#FF0000', '#FF7D00', '#FFFF00', '#00FF00', '#0000FF', '#00FFFF', '#FF00FF',
-        ]
+        'year_ctctdcs':year_ctctdcs,
+        'year_cips':year_cips,
+        'year_bm':year_bm,
+        'month_ctctdcs':month_ctctdcs,
+        'month_cips': month_cips,
+        'month_bm': month_bm,
     }
     return render(request, 'home.html', context)
 
@@ -83,3 +94,7 @@ def private_task(request):
         'tasks_unfinished_num':tasks_unfinished_num,
     }
     return render(request,'private_task.html',context)
+
+
+def knowledge(request):
+    return render(request,'knowledge.html')
