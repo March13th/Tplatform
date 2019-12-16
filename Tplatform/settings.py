@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'haystack',
     'taskmanager',
 ]
 
@@ -134,3 +135,19 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        # 使用whoosh引擎
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        # 索引文件路径
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+        # 这个文件夹也不需要自己建立，会自动生成
+    }
+}
+
+# 指定如何对搜索结果分页，这里设置为每 10 项结果为一页。
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+
+# 指定什么时候更新索引，这里我们使用 haystack.signals.RealtimeSignalProcessor，作用是每当有商品更新时就更新索引。由于商品更新不会太频繁，因此实时更新没有问题。
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

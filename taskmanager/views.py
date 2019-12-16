@@ -14,12 +14,10 @@ def index(request):
     year_ctctdcs = year_tasks.filter(product='CTC/TDCS')
     year_cips = year_tasks.filter(product='CIPS')
     year_bm = year_tasks.filter(product='BM')
-    users = User.objects.filter(type='测试').values_list('name', flat=True)
+    users = User.objects.filter(Q(type='测试') | Q(type='管理员')).values_list('name', flat=True)
     month_ctctdcs = [len(year_ctctdcs.filter(endingtime__contains=str(month)+'月')) for month in range(1,13)]
     month_cips = [len(year_cips.filter(endingtime__contains=str(month) + '月')) for month in range(1, 13)]
     month_bm = [len(year_bm.filter(endingtime__contains=str(month) + '月')) for month in range(1, 13)]
-    for i in month_ctctdcs:
-        print(i)
     context = {
         'users': users,
         'year_ctctdcs':year_ctctdcs,
@@ -94,7 +92,3 @@ def private_task(request):
         'tasks_unfinished_num':tasks_unfinished_num,
     }
     return render(request,'private_task.html',context)
-
-
-def knowledge(request):
-    return render(request,'knowledge.html')

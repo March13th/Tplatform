@@ -49,3 +49,8 @@ def late(value):
     now = datetime.datetime.today()
     late_value = (task_endtime-now).days
     return late_value
+
+@register.filter()
+def search_patch(value):
+    print(value.title,'/',value.product)
+    return value.title
