@@ -79,13 +79,13 @@
           url            : '{% url "task_detail" %}?rwh={{ task.rwh }}',
               {% if task.canbegan|strip_space == '已完成' %}
           backgroundColor: '#8fa0b7',
-          borderColor    : '#8fa0b7'
-              {% elif task.endtime|time_reformat|late < 0%}
+          borderColor    : '#8fa0b7',
+              {% elif task.endtime|time_reformat|late < 0 %}
           backgroundColor: '#f56954', //Success (green)
-          borderColor    : '#f56954' //Success (green)
+          borderColor    : '#f56954', //Success (green)
               {% else %}
           backgroundColor: '#00a65a', //Success (green)
-          borderColor    : '#00a65a' //Success (green)
+          borderColor    : '#00a65a', //Success (green)
               {% endif %}
 
         },

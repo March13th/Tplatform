@@ -45,12 +45,15 @@ def strip_space(value):
 @register.filter()
 def late(value):
     time_list =[int(t) for t in value.split(',')]
-    task_endtime = datetime.datetime(year=time_list[0],month=time_list[1],day=time_list[2])
+    print(time_list)
+    task_endtime = datetime.datetime(year=time_list[0],month=time_list[1]+1,day=time_list[2])
     now = datetime.datetime.today()
     late_value = (task_endtime-now).days
+    print(late_value)
     return late_value
 
 @register.filter()
 def search_patch(value):
     print(value.title,'/',value.product)
-    return value.title
+    value_list = [value.title,value.body]
+    return value_list

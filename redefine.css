@@ -82,3 +82,9 @@ div.box-tools {
     width: 100%;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
+
+.lockscreen-wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 3%;
+}

@@ -83,6 +83,8 @@ def private_task(request):
     username = request.GET.get('name')
     if username:
         tasks = Taskdetail.objects.filter(name=username)
+    for i in tasks:
+        print(i.rwh)
     users = User.objects.filter(type='测试').values_list('name', flat=True)
     tasks_unfinished_num = Taskdetail.objects.filter(Q(name=username) & ~Q(canbegan='已完成')).count()
     context = {
