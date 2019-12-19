@@ -1,84 +1,35 @@
+{% extends "search_base.html" %}
 {% load my_filter %}
 {% load highlight %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>TP | KNOWLEDGE</title>
-  <!-- 告诉浏览器该页面是自适应布局 -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
-  <link rel="stylesheet" href="{% static 'redefine.css' %}">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- 警告：Respond.js 不支持 file:// 方式查看（即本地方式查看）-->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-<style>
-    span.highlighted {
-        color: red;
-    }
-</style>
-</head>
-<body class="hold-transition lockscreen">
-<!-- Automatic element centering -->
-<div class="lockscreen-wrapper">
-  <div class="lockscreen-logo">
-    <b>知识库</b>检索
-  </div>
-
-  <div class="lockscreen-item">
-
-    <form role="search" class="col" action="{% url 'haystack_search' %}" method="get">
-      <div class="input-group">
-        <input type="search" class="form-control" placeholder="输入关键字以检索" name="q">
-
-        <div class="input-group-btn">
-          <button type="submit" class="btn"><i class="fa fa-arrow-right text-muted"></i></button>
-        </div>
-      </div>
-    </form>
-    <!-- /.lockscreen credentials -->
-
-  </div>
-  <div class="text-center">
-      <button type="button" class="btn bg-navy btn-flat margin"><a href="{% url 'home' %}">Back To Home</a></button>
-  </div>
-
-    {% if query %}
-
+{% block search %}{% if query %}
         {% for result in page.object_list %}
-            <div class="box box-default ">
-                {% with result|search_patch as sb %}
-          <div class="box-header with-border bg-black-active color-palette">
-          <button type="submit" class="btn"><i class="fa fa-arrow-right text-muted"><a href="{{ result.object.get_absolute_url }}"></a></i>more </button>
-            <h3 class="box-title">{{ sb.0 }}</h3>
+{% with result|search_patch as r %}
+    <div class="box-group" id="accordion">
+            <div class="panel box box-primary">
+                  <div class="box-header with-border">
+                      <button type="submit" class="btn" href="{% url 'knowledge_detail' %}?product={{ r.2 }}&knowledge_title={{ r.0 }}"><i class="fa fa-arrow-right text-muted"><a href="{% url 'knowledge_detail' %}?product={{ r.2 }}&knowledge_title={{ r.0 }}">more</a></i></button>
+                    <h4 class="box-title">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#{{ r.3 }}" aria-expanded="true" class="">
+                        {{ r.0 }}
+                      </a>
+                    </h4>
 
-          </div>
-          <div class="box-body">
-            {% highlight sb.1 with query max_length 999 %}
-          </div>
-                 {% endwith %}
-          <!-- /.box-body -->
-        </div>
-
+                  </div>
+                  <div id="{{ r.3 }}" class="panel-collapse collapse in" aria-expanded="true" style="">
+                    <div class="box-body">
+                      {% highlight r.1 with query max_length 99 %}
+                    </div>
+                  </div>
+                </div>
+    </div>
+            {% endwith %}
 
 
 
     {% empty %}
         <p>No result found.</p>
         {% endfor %}
-
         {% if page.has_previous or page.has_next %}
                 <div style="text-align: center">
                     {% if page.has_previous %}<a class="btn btn-sm btn-default btn-flat" href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}上一页{% if page.has_previous %}</a>{% endif %}
@@ -87,15 +38,4 @@
                 </div>
         {% endif %}
     {% else %}
-    {% endif %}
-</div>
-<!-- /.center -->
-
-<!-- jQuery 3 -->
-<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-
-
-</body>
-</html>
+    {% endif %}{% endblock %}

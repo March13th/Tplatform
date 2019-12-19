@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from django.core.paginator import Paginator
-from .models import Task, User, Taskdetail
+from .models import Task, User, Taskdetail,Knowledge
 import re
 from datetime import datetime, timedelta
 from django.db.models import Q
@@ -94,3 +94,15 @@ def private_task(request):
         'tasks_unfinished_num':tasks_unfinished_num,
     }
     return render(request,'private_task.html',context)
+
+def knowledge_detail(request):
+    context = {}
+    product = request.GET.get('product')
+    title = request.GET.get('knowledge_title')
+    print(product,title)
+    knowledge = get_object_or_404(Knowledge,product=product,title=title)
+    context = {
+        'knowledge':knowledge
+    }
+    print(knowledge.title,knowledge.body)
+    return render(request,'knowledge_detail.html',context)

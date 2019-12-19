@@ -2,6 +2,7 @@ from django import template
 import re
 from taskmanager.models import Taskdetail,Task
 import datetime
+import hashlib
 
 register = template.Library()
 
@@ -54,6 +55,7 @@ def late(value):
 
 @register.filter()
 def search_patch(value):
-    print(value.title,'/',value.product)
-    value_list = [value.title,value.body]
+    md5 = hashlib.md5()
+    md5.update(value.title.encode('utf-8'))
+    value_list = [value.title,value.body,value.product,md5.hexdigest()]
     return value_list
