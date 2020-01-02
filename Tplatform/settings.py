@@ -24,8 +24,7 @@ SECRET_KEY = 'oa06$(!bvgzs!pah-e!7!al1sn(18sn%fs@b0q!o=_a82ft484'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['192.168.0.105']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -86,9 +85,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'taskmanager',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'USER': 'taskmanager',
+        'PASSWORD': 'xudianjun',
+        'HOST': '172.16.131.35',
         'PORT': '3306',
     }
 }
@@ -138,16 +137,16 @@ STATICFILES_DIRS = [
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        # ä½¿ç”¨whooshå¼•æ“Ž
+        # Ê¹ÓÃwhooshÒýÇæ
         'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
-        # ç´¢å¼•æ–‡ä»¶è·¯å¾„
+        # Ë÷ÒýÎÄ¼þÂ·¾¶
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
-        # è¿™ä¸ªæ–‡ä»¶å¤¹ä¹Ÿä¸éœ€è¦è‡ªå·±å»ºç«‹ï¼Œä¼šè‡ªåŠ¨ç”Ÿæˆ
+        # Õâ¸öÎÄ¼þ¼ÐÒ²²»ÐèÒª×Ô¼º½¨Á¢£¬»á×Ô¶¯Éú³É
     }
 }
 
-# æŒ‡å®šå¦‚ä½•å¯¹æœç´¢ç»“æžœåˆ†é¡µï¼Œè¿™é‡Œè®¾ç½®ä¸ºæ¯ 10 é¡¹ç»“æžœä¸ºä¸€é¡µã€‚
+# Ö¸¶¨ÈçºÎ¶ÔËÑË÷½á¹û·ÖÒ³£¬ÕâÀïÉèÖÃÎªÃ¿ 10 Ïî½á¹ûÎªÒ»Ò³¡£
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 
-# æŒ‡å®šä»€ä¹ˆæ—¶å€™æ›´æ–°ç´¢å¼•ï¼Œè¿™é‡Œæˆ‘ä»¬ä½¿ç”¨ haystack.signals.RealtimeSignalProcessorï¼Œä½œç”¨æ˜¯æ¯å½“æœ‰å•†å“æ›´æ–°æ—¶å°±æ›´æ–°ç´¢å¼•ã€‚ç”±äºŽå•†å“æ›´æ–°ä¸ä¼šå¤ªé¢‘ç¹ï¼Œå› æ­¤å®žæ—¶æ›´æ–°æ²¡æœ‰é—®é¢˜ã€‚
+# Ö¸¶¨Ê²Ã´Ê±ºò¸üÐÂË÷Òý£¬ÕâÀïÎÒÃÇÊ¹ÓÃ haystack.signals.RealtimeSignalProcessor£¬×÷ÓÃÊÇÃ¿µ±ÓÐÉÌÆ·¸üÐÂÊ±¾Í¸üÐÂË÷Òý¡£ÓÉÓÚÉÌÆ·¸üÐÂ²»»áÌ«Æµ·±£¬Òò´ËÊµÊ±¸üÐÂÃ»ÓÐÎÊÌâ¡£
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

@@ -21,7 +21,7 @@ def current_month_count(product):
 
 # Create your views here.
 def index(request):
-    product_list = ['BM','CIPS','CTC/TDCS','CSM/LKM','CZ','KY','LKC','RDM']
+    product_list = ['BM','CIPS','CTC/TDCS',,'CSM/LKM','CZ','KY','LKC','RDM']
     month_count = []
     context = {}
     users = User.objects.filter(Q(type='测试') | Q(type='管理员')).values_list('name', flat=True)

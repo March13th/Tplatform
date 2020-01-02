@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load my_filter %}
 
-{% block title %}HOME{% endblock %}
+{% block title %}ANALYSE{% endblock %}
 
 {% block user_list %}
     {% for user in users %}
@@ -59,9 +59,9 @@
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>兼容性</h3>
+                            <h3>预留</h3>
 
-                            <p>兼容性查询</p>
+                            <p>预留预留</p>
                         </div>
                         <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
@@ -77,7 +77,7 @@
     <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">当月进行中任务计数</h3>
+                <h3 class="box-title">年度任务统计</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -94,11 +94,9 @@
                             <li><i class="fa fa-circle-o text-red"></i>BM</li>
                             <li><i class="fa fa-circle-o text-green"></i>CIPS</li>
                             <li><i class="fa fa-circle-o text-yellow"></i>CTC/TDCS</li>
-                            <li><i class="fa fa-circle-o text-aqua"></i>CSM/LKM</li>
-                            <li><i class="fa fa-circle-o text-light-blue"></i>CZ</li>
-                            <li><i class="fa fa-circle-o text-gray"></i>KY</li>
-                            <li><i class="fa fa-circle-o text-purple"></i>LKC</li>
-                            <li><i class="fa fa-circle-o text-black"></i>RDM</li>
+{#                            <li><i class="fa fa-circle-o text-aqua"></i>CTC/TDCS</li>#}
+{#                            <li><i class="fa fa-circle-o text-light-blue"></i>CZ</li>#}
+{#                            <li><i class="fa fa-circle-o text-gray"></i>KY</li>#}
                         </ul>
                     </div>
                     <!-- /.col -->
@@ -108,19 +106,17 @@
         </div>
     </div>
     <div class="col-md-8">
-          <!-- BAR CHART -->
-          <div class="box box-success">
+        <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">工时统计</h3>
+                <h3 class="box-title">月任务统计</h3>
             </div>
             <div class="box-body">
-              <div class="chart">
-                <canvas id="barChart" style="height: 230px; width: 510px;" width="510" height="230"></canvas>
-              </div>
+                <div class="chart">
+                    <canvas id="lineChart" style="height: 250px; width: 787px;" width="787" height="250"></canvas>
+                </div>
             </div>
             <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+        </div>
     </div>
 
     </div>
@@ -142,7 +138,7 @@
             {#    var areaChart       = new Chart(areaChartCanvas)#}
 
             var areaChartData = {
-                labels: ['1', '2', '3', '4', '5', '6', '7'],
+                labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月','10月', '11月', '12月'],
                 datasets: [
                     {
                         label: 'bm',
@@ -153,19 +149,39 @@
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(245, 105, 84,1)',
                         data: [
-                            1,2,3,4,5,6,7
-                        ],
+                            {% for bm in month_bm %}
+                                {{ bm }},
+                            {% endfor %}
+                        ]
                     },
-                            {
-          							label               : 'Digital Goods',
-          							fillColor           : 'rgba(60,141,188,0.9)',
-          							strokeColor         : 'rgba(60,141,188,0.8)',
-          							pointColor          : '#3b8bba',
-          							pointStrokeColor    : 'rgba(60,141,188,1)',
-          							pointHighlightFill  : '#fff',
-          							pointHighlightStroke: 'rgba(60,141,188,1)',
-          							data                : [28, 48, 40, 19, 86, 27, 90]
-        }
+                                    {
+                        label: 'cips',
+                        fillColor: 'rgba(0, 166, 90, 1)',
+                        strokeColor: 'rgba(0, 166, 90, 1)',
+                        pointColor: 'rgba(0, 166, 90, 1)',
+                        pointStrokeColor: '#00a65a',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(0, 166, 90,1)',
+                        data: [
+                            {% for cips in month_cips %}
+                                {{ cips }},
+                            {% endfor %}
+                        ]
+                    },
+                    {
+                        label: 'ctc/tdcs',
+                        fillColor: 'rgba(243,156,18,0.9)',
+                        strokeColor: 'rgba(243,156,18,0.8)',
+                        pointColor: '#f39c12',
+                        pointStrokeColor: 'rgba(243,156,18,1)',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(243,156,18,1)',
+                        data: [
+                            {% for ctctdcs in month_ctctdcs %}
+                                {{ ctctdcs }},
+                            {% endfor %}
+                        ]
+                    }
                 ]
             }
 
@@ -211,6 +227,16 @@
             :
             true
         }
+
+
+            //-------------
+            //- LINE CHART -
+            //--------------
+            var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+            var lineChart = new Chart(lineChartCanvas)
+            var lineChartOptions = areaChartOptions
+            lineChartOptions.datasetFill = false
+            lineChart.Line(areaChartData, lineChartOptions)
             //-------------
             //- PIE CHART -
             //-------------
@@ -219,53 +245,41 @@
             var pieChart = new Chart(pieChartCanvas)
             var PieData = [
                 {
-                    value: {{ month_count.0 }},
+                    value: {{ year_bm|length }},
                     color: '#f56954',
                     highlight: '#f56954',
                     label: 'BM'
                 },
                 {
-                    value: {{ month_count.1 }},
+                    value: {{ year_cips|length }},
                     color: '#00a65a',
                     highlight: '#00a65a',
                     label: 'CIPS'
                 },
                 {
-                    value: {{ month_count.2 }},
+                    value: {{ year_ctctdcs|length }},
                     color: '#f39c12',
                     highlight: '#f39c12',
                     label: 'CTC/TDCS'
                 },
-               {
-                    value: {{ month_count.3 }},
-                    color: '#00c0ef',
-                    highlight: '#00c0ef',
-                    label: 'CSM/LKM'
-                },
-                {
-                    value: {{ month_count.4 }},
-                    color: '#3c8dbc',
-                    highlight: '#3c8dbc',
-                    label: 'CZ'
-                },
-                {
-                    value: {{ month_count.5 }},
-                    color: '#d2d6de',
-                    highlight: '#d2d6de',
-                    label: 'KY'
-                },
-                                {
-                    value: {{ month_count.6 }},
-                    color: '#605ca8',
-                    highlight: '#605ca8',
-                    label: 'LKC'
-                },
-                                {
-                    value: {{ month_count.7 }},
-                    color: '#111',
-                    highlight: '#111',
-                    label: 'RDM'
-                },
+{#                {#}
+{#                    value: 600,#}
+{#                    color: '#00c0ef',#}
+{#                    highlight: '#00c0ef',#}
+{#                    label: 'CTC/TDCS'#}
+{#                },#}
+{#                {#}
+{#                    value: 300,#}
+{#                    color: '#3c8dbc',#}
+{#                    highlight: '#3c8dbc',#}
+{#                    label: 'CZ'#}
+{#                },#}
+{#                {#}
+{#                    value: 100,#}
+{#                    color: '#d2d6de',#}
+{#                    highlight: '#d2d6de',#}
+{#                    label: 'KY'#}
+{#                }#}
             ]
             var pieOptions = {
                 //Boolean - Whether we should show a stroke on each segment
