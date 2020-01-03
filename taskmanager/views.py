@@ -16,20 +16,30 @@ def current_month_count(product):
         endingtime_month = int(re.sub('\D', ',', i.endingtime).split(',')[1])
         if endingtime_month >= month:
             count += 1
-    print(count)
     return count
 
 # Create your views here.
 def index(request):
+    year = datetime.now().year
     product_list = ['BM','CIPS','CTC/TDCS','CSM/LKM','CZ','KY','LKC','RDM']
+    today = '{}-{}-{}'.format(datetime.now().year,datetime.now().month,datetime.now().day)
+    work_dict = {}
     month_count = []
     context = {}
     users = User.objects.filter(Q(type='测试') | Q(type='管理员')).values_list('name', flat=True)
+    users_test = User.objects.filter(type='测试').values_list('name', flat=True)
+    for user in users_test:
+        work_dict[user]=0
+        user_tasks_finished = Taskdetail.objects.filter(Q(name=user) & ~Q(canbegan__contains='完成')& Q(begantime__lte=today))
+        if user_tasks_finished:            
+            work_dict[user]=len(user_tasks_finished)
+    print(work_dict)
     for product in product_list:
         month_count.append(current_month_count(product))
     context = {
         'users': users,
         'month_count': month_count,
+        'work_dict':work_dict,
     }
     return render(request, 'home.html', context)
     

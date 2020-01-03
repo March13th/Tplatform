@@ -149,7 +149,7 @@ BODY 标签选项：
     <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-           <b>Do Very Best.</b> 
+           <b></b> Do Very Best.
         </div>
         <!-- Default to the left -->
         <strong>Author:<a href="#">March_13th</a></strong>
