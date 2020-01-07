@@ -30,7 +30,6 @@ def task_days(value):
 @register.filter()
 def for_pri_task(value):
     rwh_split = value.split('-')
-    print(rwh_split)
     mode = rwh_split[0]
     product = rwh_split[1]
     year = rwh_split[2]

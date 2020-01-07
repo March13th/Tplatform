@@ -113,7 +113,7 @@
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
 
-              <h3 class="box-title">本年工时累积</h3>
+              <h3 class="box-title">当前人员正进行任务数</h3>
             </div>
             <div class="box-body">
               <div id="bar-chart" style="height: 300px;"></div>

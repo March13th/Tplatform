@@ -26,17 +26,14 @@ def index(request):
     work_dict = {}
     month_count = []
     context = {}
-    users = User.objects.filter(Q(type='测试') | Q(type='管理员')).values_list('name', flat=True)
+#   users = User.objects.filter(Q(type='测试') | Q(type='管理员')).values_list('name', flat=True)
+    users = User.objects.filter(Q(type='测试')& ~Q(name='鲁圣')& ~Q(name='马燕')& ~Q(name='唐浩明')).values_list('name', flat=True)
     users_test = User.objects.filter(type='测试').values_list('name', flat=True)
     for user in users_test:
         work_dict[user]=0
-        user_tasks_finished = Taskdetail.objects.filter(Q(name=user) & ~Q(canbegan__contains='完成')& Q(begantime__lte=today))
-        if user_tasks_finished:
-            current_task_sum = 0
-            for i in user_tasks_finished:
-                print(i.begantime)
-                time_sum += int((i.endtime-i.begantime).days)+1
-            work_dict[user]=time_sum
+        user_tasks_finished = Taskdetail.objects.filter(Q(name=user) & ~Q(canbegan__contains='完成')& Q(begantime__lte=today)& Q(endtime__gte=today))
+        if user_tasks_finished:            
+            work_dict[user]=len(user_tasks_finished)
     print(work_dict)
     for product in product_list:
         month_count.append(current_month_count(product))
@@ -55,7 +52,8 @@ def analyse(request):
     year_ctctdcs = year_tasks.filter(product='CTC/TDCS')
     year_cips = year_tasks.filter(product='CIPS')
     year_bm = year_tasks.filter(product='BM')
-    users = User.objects.filter(Q(type='测试') | Q(type='管理员')).values_list('name', flat=True)
+#   users = User.objects.filter(Q(type='测试') | Q(type='管理员')).values_list('name', flat=True)
+    users = User.objects.filter(Q(type='测试')& ~Q(name='鲁圣')& ~Q(name='马燕')& ~Q(name='唐浩明')).values_list('name', flat=True)
     month_ctctdcs = [len(year_ctctdcs.filter(endingtime__contains=str(month)+'月')) for month in range(1,13)]
     month_cips = [len(year_cips.filter(endingtime__contains=str(month) + '月')) for month in range(1, 13)]
     month_bm = [len(year_bm.filter(endingtime__contains=str(month) + '月')) for month in range(1, 13)]
@@ -91,7 +89,8 @@ def task_list(request):
     if page_range[-1] != paginator.num_pages:
         page_range.append(paginator.num_pages)
 
-    users = User.objects.filter(type='测试').values_list('name', flat=True)
+#   users = User.objects.filter(type='测试').values_list('name', flat=True)
+    users = User.objects.filter(Q(type='测试')& ~Q(name='鲁圣')& ~Q(name='马燕')& ~Q(name='唐浩明')).values_list('name', flat=True)
     context = {}
     context = {
         'page_of_tasks': page_of_tasks,
@@ -102,7 +101,8 @@ def task_list(request):
 
 
 def task_detail(request):
-    users = User.objects.filter(type='测试').values_list('name', flat=True)
+#   users = User.objects.filter(type='测试').values_list('name', flat=True)
+    users = User.objects.filter(Q(type='测试')& ~Q(name='鲁圣')& ~Q(name='马燕')& ~Q(name='唐浩明')).values_list('name', flat=True)
     rwh = request.GET.get('rwh')
     rwh_split = rwh.split('-')
     mode = rwh_split[0]
@@ -121,13 +121,15 @@ def task_detail(request):
 
 def private_task(request):
     context = {}
+    today = '{}-{}-{}'.format(datetime.now().year,datetime.now().month,datetime.now().day)
     username = request.GET.get('name')
     if username:
         tasks = Taskdetail.objects.filter(name=username)
     for i in tasks:
         print(i.rwh)
-    users = User.objects.filter(type='测试').values_list('name', flat=True)
-    tasks_unfinished_num = Taskdetail.objects.filter(Q(name=username) & ~Q(canbegan='已完成')).count()
+#   users = User.objects.filter(type='测试').values_list('name', flat=True)
+    users = User.objects.filter(Q(type='测试')& ~Q(name='鲁圣')& ~Q(name='马燕')& ~Q(name='唐浩明')).values_list('name', flat=True)
+    tasks_unfinished_num = Taskdetail.objects.filter(Q(name=username) & ~Q(canbegan__contains='完成')& Q(begantime__lte=today)& Q(endtime__gte=today)).count()
     context = {
         'tasks':tasks,
         'users':users,
