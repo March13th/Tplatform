@@ -434,7 +434,7 @@
     var bar_data = {
       data : [
           {% for key,value in work_dict.items %}
-        ['{{ key }}',{{ value }}],
+        ['<a href="www.baidu.com">{{ key }}</a>',{{ value }}],
     {% endfor %}
       ],
       color: '#3c8dbc'
