@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'Tplatform.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'taskmanager',
-        'USER': 'root',
-        'PASSWORD': 'ombpk123',
-        'HOST': '172.16.115.28',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': '3306',
     }
 }
